@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommendations</title>
+    <style>
+    html {
+        height: 100%;
+    }
+    
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 30px;
+        padding-bottom: 30px;
+        height: 100vh;
+        overflow: hidden;
+        background-image: url('/static/background.jpg');
+        background-size: cover;
+        background-attachment: fixed;
+        background-repeat: no-repeat;
+        background-position: center center;
+        font-family: "Trebuchet MS", Helvetica, sans-serif;
+        background-color: #181818;
+        color: #EAEAEA;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 50px;
+    }
+    h3 {
+        margin-bottom: 20px;
+    }
+    ul {
+        list-style-type: none;
+        padding: 0;
+    }
+    li {
+        margin: 5px 0;
+    }
+    #similarityPlot {
+        max-width: 80vw;  /* 80% of the viewport width */
+        max-height: 80vh;  /* 80% of the viewport height */
+        display: none;
+        margin-top: 20px;
+    }
+    button {
+        padding: 10px 20px;
+        margin: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007BFF;
+        color: #FFF;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    button:hover {
+        background-color: #0056b3;
+    }
+    .content-container {
+        background-color: rgba(37, 37, 37); 
+        padding: 20px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        margin: 20px;
+        max-height: calc(100vh - 100px);
+        overflow-y: auto;
+    }
+    </style>
+    <script>
+        function togglePlot() {
+            var plot = document.getElementById('similarityPlot');
+            if (plot.style.display === "none") {
+                plot.style.display = "block";
+            } else {
+                plot.style.display = "none";
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="content-container">
+        <h3>Top 5 Recommendations:</h3>
+        <div className:"recom_box">
+            <ul>
+            {% for title in recommended_titles %}
+                <li>{{ title }}</li>
+            {% endfor %}
+            </ul>
+            <div>
+                <button onclick="window.location.href='/'">Get More Recommendations</button>
+                <button onclick="togglePlot()">View Similarity Plot</button>
+            </div>
+            <img id="similarityPlot" src="data:image/png;base64,{{ plot_url }}" alt="Similarity Plot">
+        </div>
+    </div>
+</body>
+</html>
